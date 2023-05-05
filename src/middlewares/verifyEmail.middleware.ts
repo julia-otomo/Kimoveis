@@ -2,18 +2,29 @@ import { NextFunction, Request, Response } from "express";
 import { Repository } from "typeorm";
 import { User } from "../entities";
 import { AppDataSource } from "../data-source";
+import AppError from "../error";
 
 const verifyEmail = async (
   request: Request,
   response: Response,
   next: NextFunction
 ): Promise<void> => {
-  const email: string = request.body.email;
+  const userEmail: string = request.body.email;
 
-  if (email) {
+  if (userEmail) {
     const userRepo: Repository<User> = AppDataSource.getRepository(User);
-    const userQueryBuilder = userRepo.createQueryBuilder("user");
+    const findEmail: boolean = await userRepo.exist({
+      where: {
+        email: userEmail,
+      },
+    });
 
-    await userQueryBuilder.getOne();
+    if (findEmail) {
+      throw new AppError("Email already exists", 409);
+    }
   }
+
+  next();
 };
+
+export default verifyEmail;

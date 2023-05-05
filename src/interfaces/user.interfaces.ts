@@ -1,5 +1,7 @@
 import { z } from "zod";
 import {
+  tokenSchema,
+  userLoginSchema,
   userRequestSchema,
   userResponseSchema,
   userSchema,
@@ -14,4 +16,15 @@ type TUserResponse = z.infer<typeof userResponseSchema>;
 
 type TUserUpdateRequest = z.infer<typeof userUpdateRequestSchema>;
 
-export { TUser, TUserRequest, TUserResponse, TUserUpdateRequest };
+type TUserLogin = z.infer<typeof userLoginSchema>;
+
+type TToken = z.infer<typeof tokenSchema>;
+
+export {
+  TUser,
+  TUserRequest,
+  TUserResponse,
+  TUserUpdateRequest,
+  TUserLogin,
+  TToken,
+};

@@ -24,14 +24,14 @@ class User {
   @Column({ type: "varchar", length: 120 })
   password: string;
 
-  @CreateDateColumn()
-  createdAt: string | Date;
+  @CreateDateColumn({ type: "date" })
+  createdAt: string;
 
-  @UpdateDateColumn({ nullable: true })
-  updatedAt: string | Date | null | undefined;
+  @UpdateDateColumn({ nullable: true, type: "date" })
+  updatedAt: string | null | undefined;
 
-  @DeleteDateColumn({ nullable: true })
-  deleteAt: string | Date | null | undefined;
+  @DeleteDateColumn({ nullable: true, type: "date" })
+  deletedAt: string | null | undefined;
 }
 
 export default User;
