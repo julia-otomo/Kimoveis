@@ -15,7 +15,7 @@ const verifyUserType = async (
   next();
 };
 
-const verifyUserTypeToUpdateAndDeleteUser = async (
+const verifyUserTypeToUpdateUser = async (
   request: Request,
   response: Response,
   next: NextFunction
@@ -25,10 +25,10 @@ const verifyUserTypeToUpdateAndDeleteUser = async (
   const requestUserId: number = Number(request.params.id);
 
   if (reponseUserId !== requestUserId && !responseUserAdmin) {
-    throw new AppError("Insufficient Permission", 403);
+    throw new AppError("Insufficient permission", 403);
   }
 
   next();
 };
 
-export { verifyUserType, verifyUserTypeToUpdateAndDeleteUser };
+export { verifyUserType, verifyUserTypeToUpdateUser };

@@ -1,13 +1,22 @@
 import { Router } from "express";
 import validateRequestBody from "../middlewares/validateBody.midleware";
-import { userRequestSchema } from "../schemas/user.schemas";
+import {
+  userRequestSchema,
+  userUpdateRequestSchema,
+} from "../schemas/user.schemas";
 import verifyEmail from "../middlewares/verifyEmail.middleware";
 import {
   createUserController,
+  deleteUserController,
   getAllUsersController,
+  updateUserController,
 } from "../controllers/user.controllers";
 import validateToken from "../middlewares/validateToken.middleware";
-import { verifyUserType } from "../middlewares/verifyUserType.middleware";
+import {
+  verifyUserType,
+  verifyUserTypeToUpdateUser,
+} from "../middlewares/verifyUserType.middleware";
+import verifyIfUserExists from "../middlewares/verifyIfUserExists.middleware";
 
 const userRouter: Router = Router();
 
@@ -21,5 +30,21 @@ userRouter.post(
 userRouter.use(validateToken);
 
 userRouter.get("", verifyUserType, getAllUsersController);
+
+userRouter.patch(
+  "/:id",
+  validateRequestBody(userUpdateRequestSchema.partial()),
+  verifyIfUserExists,
+  verifyUserTypeToUpdateUser,
+  verifyEmail,
+  updateUserController
+);
+
+userRouter.delete(
+  "/:id",
+  verifyIfUserExists,
+  verifyUserType,
+  deleteUserController
+);
 
 export default userRouter;

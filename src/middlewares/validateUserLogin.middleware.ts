@@ -26,9 +26,7 @@ const validateUserLogin = async (
     throw new AppError("Invalid credentials", 401);
   }
 
-  const hashPassword = hashSync(findUser.password, 10);
-
-  const validPassword: boolean = compareSync(userPassword, hashPassword);
+  const validPassword: boolean = compareSync(userPassword, findUser.password);
 
   if (!validPassword) {
     throw new AppError("Invalid credentials", 401);

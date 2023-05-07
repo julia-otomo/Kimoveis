@@ -20,8 +20,10 @@ const userRequestSchema = userSchema.omit({
 
 const userResponseSchema = userSchema.omit({ password: true });
 
-const userUpdateRequestSchema = userRequestSchema.partial();
-
+const userUpdateRequestSchema = userRequestSchema.omit({
+  id: true,
+  admin: true,
+});
 const userLoginSchema = userSchema.pick({
   email: true,
   password: true,
