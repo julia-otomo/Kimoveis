@@ -25,17 +25,17 @@ class RealEstate {
   @Column({ type: "integer" })
   size: number;
 
-  @CreateDateColumn()
-  createdAt: string | Date;
+  @CreateDateColumn({ type: "date" })
+  createdAt: string;
 
-  @UpdateDateColumn({ nullable: true })
-  updatedAt: string | Date | null | undefined;
+  @UpdateDateColumn({ nullable: true, type: "date" })
+  updatedAt: string | null | undefined;
 
   @OneToOne(() => Address)
   @JoinColumn()
   address: Address;
 
-  @ManyToOne(() => Category)
+  @ManyToOne(() => Category, (category) => category.realEstate)
   category: Category;
 }
 
