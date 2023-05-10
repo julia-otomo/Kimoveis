@@ -8,7 +8,7 @@ class Schedule {
   id: number;
 
   @Column({ type: "date" })
-  date: Date | string;
+  date: string;
 
   @Column({ type: "time" })
   hour: string;
@@ -16,7 +16,7 @@ class Schedule {
   @ManyToOne(() => User)
   user: User;
 
-  @ManyToOne(() => RealEstate)
+  @ManyToOne(() => RealEstate, (realEstate) => realEstate.schedules)
   realEstate: RealEstate;
 }
 
