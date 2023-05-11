@@ -1,6 +1,7 @@
 import { hashSync } from "bcryptjs";
 import {
   BeforeInsert,
+  BeforeUpdate,
   Column,
   CreateDateColumn,
   DeleteDateColumn,
@@ -36,6 +37,7 @@ class User {
   deletedAt: string | null | undefined;
 
   @BeforeInsert()
+  @BeforeUpdate()
   hashPassword() {
     this.password = hashSync(this.password, 10);
   }
