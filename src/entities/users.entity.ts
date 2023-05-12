@@ -1,4 +1,4 @@
-import { hashSync } from "bcryptjs";
+import { getRounds, hashSync } from "bcryptjs";
 import {
   BeforeInsert,
   BeforeUpdate,
@@ -39,7 +39,11 @@ class User {
   @BeforeInsert()
   @BeforeUpdate()
   hashPassword() {
-    this.password = hashSync(this.password, 10);
+    const isEncrypted: number = getRounds(this.password);
+
+    if (!isEncrypted) {
+      this.password = hashSync(this.password, 10);
+    }
   }
 }
 

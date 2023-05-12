@@ -11,4 +11,8 @@ type TScheduleRequest = z.infer<typeof schedulesRequestSchema>;
 
 type TScheduleResponse = z.infer<typeof schedulesResponseSchema>;
 
-export { TSchedule, TScheduleRequest, TScheduleResponse };
+interface IScheduleSuccess {
+  message: string;
+}
+
+export { TSchedule, TScheduleRequest, TScheduleResponse, IScheduleSuccess };

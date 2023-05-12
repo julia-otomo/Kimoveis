@@ -1,5 +1,8 @@
 import { Request, Response } from "express";
-import { TScheduleRequest } from "../interfaces/schedules.interfaces";
+import {
+  IScheduleSuccess,
+  TScheduleRequest,
+} from "../interfaces/schedules.interfaces";
 import createScheduleService from "../services/schedules/createSchedule.service";
 import { RealEstate } from "../entities";
 import listAllRealEstateSchedulesService from "../services/schedules/listAllRealEstateSchedules.service";
@@ -11,9 +14,12 @@ const createScheduleController = async (
   const requestBody: TScheduleRequest = request.body;
   const userId: number = response.locals.user.id;
 
-  await createScheduleService(requestBody, userId);
+  const schedule: IScheduleSuccess = await createScheduleService(
+    requestBody,
+    userId
+  );
 
-  return response.status(201).json({ message: "Schedule created" });
+  return response.status(201).json(schedule);
 };
 
 const listAllRealEstateSchedulesController = async (

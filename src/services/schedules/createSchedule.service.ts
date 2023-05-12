@@ -1,7 +1,7 @@
 import { Repository } from "typeorm";
 import {
+  IScheduleSuccess,
   TScheduleRequest,
-  TScheduleResponse,
 } from "../../interfaces/schedules.interfaces";
 import { RealEstate, Schedule, User } from "../../entities";
 import { AppDataSource } from "../../data-source";
@@ -10,7 +10,7 @@ import { TUser } from "../../interfaces/user.interfaces";
 const createScheduleService = async (
   requestBody: TScheduleRequest,
   userId: number
-): Promise<void> => {
+): Promise<IScheduleSuccess> => {
   const scheduleRepository: Repository<Schedule> =
     AppDataSource.getRepository(Schedule);
   const userRepository: Repository<User> = AppDataSource.getRepository(User);
@@ -36,6 +36,8 @@ const createScheduleService = async (
   });
 
   await scheduleRepository.save(newSchedule);
+
+  return { message: "Schedule created" };
 };
 
 export default createScheduleService;
